@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# macOS
+.DS_Store
+
+# CAD binaries live in Azure blob storage (see tools/fetch.py).
+# The .stl meshes and .png renders beside them ARE committed, so the corpus
+# can be looked at before anything is downloaded.
+*.FCStd
+*.FCStd1
+
+# The .stl meshes are 28-58 MB each and are pinned in task.toml, so
+# tools/fetch.py brings them down with the documents. Only the small .png
+# renders are committed.
+*.stl
+
+# The harness caches its measurement of the reference here.
+FreeCAD/**/tests/task/reference/.cache/

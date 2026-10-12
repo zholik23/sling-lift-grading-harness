@@ -1,0 +1,28 @@
+{
+ "task_id": "freecad-0004-sling-lift",
+ "score": 4.3333,
+ "max_score": 6,
+ "passed": false,
+ "subscores": {
+  "executes and builds geometry": 1.0,
+  "geometry matches ground truth": 1.0,
+  "pantograph joints mated": 0.3333,
+  "mechanism articulates": 0.0,
+  "carries dimensional constraints": 1.0,
+  "dimensions drive the geometry": 1.0,
+  "signature dimensions present": 1.0
+ },
+ "harness_version": "1.0.0",
+ "must_pass": [
+  "executes and builds geometry"
+ ],
+ "details": {
+  "executes and builds geometry": "rebuilt: 45 bodies, 972876 mm^3 of solid",
+  "geometry matches ground truth": "part set matches the reference by mass signature (bodies-level): 96.4% of the reference's material accounted for, 95.9% of the candidate's; combined 0.963. Free up to 5% difference, zero at 20%",
+  "pantograph joints mated": "3 of the reference's 9 pivots are realised by a joint between the corresponding bodies that is active, constrains two different rigid bodies, sits on both bodies' material with no gap-bridging offset, and is coincident at the delivered pose (4 such joints in all). Candidate joints: 92, of which 11 inactive or unresolved, 2 between already-welded bodies, 34 duplicates, 0 off the material or bridged by an offset, 6 not coincident",
+  "mechanism articulates": "jointed mechanism holds 101% of the reference mechanism's volume -> 1.00; instantaneous mobility from the joint Jacobian 0 vs reference 3 (1 spare spin allowed) -> 0.00; limits: 1 limited joints, mean 1.00: ranges well-formed and consistent with the reference -> 1.00. score = volume x mobility x (0.5 + 0.5 x limits)",
+  "carries dimensional constraints": "100% of solid volume has modelling history (reference 100%) -> 1.00; 31 sketches feeding solids are 100% constrained (reference 100%) -> 1.00; 163 dimension carriers",
+  "dimensions drive the geometry": "16 carriers nudged 5% and recomputed: named ones moved the solids n/a of the time, unnamed 84% -> 0.84 (reference 84%)",
+  "signature dimensions present": "7 of 7 drawing dimensions the reference exhibits are realised as a parameter or in the geometry"
+ }
+}

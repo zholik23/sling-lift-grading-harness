@@ -1,0 +1,24 @@
+# Not pip-installable:
+#   * FreeCAD 1.1 -- the harness measures through `freecadcmd`, not through
+#     this interpreter. Set FREECAD_CMD to that binary (see README).
+#
+# Unlike the SolidWorks tasks in this family, nothing here needs Windows or
+# a GUI: freecadcmd runs headless on Linux, macOS and Windows alike.
+
+numpy==2.2.6
+trimesh==4.7.1
+shapely==2.1.2
+scipy==1.16.1
+networkx==3.6.1
+rtree==1.4.1
+manifold3d==3.5.2
+pillow==12.3.0
+python-dotenv==1.1.0
+
+# --- optional: the LLM judge ----------------------------------------
+# common/llm_judge.py is included and working, but nothing in the stub
+# harness calls it. If you decide a component is better judged than
+# measured, these are what it needs (plus AZURE_API_KEY and
+# AZURE_CLAUDE_RESOURCE in a .env at the repo root).
+anthropic==0.69.0
+pydantic==2.12.3

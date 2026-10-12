@@ -1,0 +1,139 @@
+schema_version = "1.4"
+
+[task]
+name = "storygold/freecad-0004-sling-lift"
+version = "1.0.0"
+description = "Reconstruct a parametric CAD from a technical drawing"
+keywords = ["freecad", "cad", "geometric_reconstruction"]
+
+[[task.authors]]
+name = "StoryGold"
+
+[metadata]
+program = "FreeCAD"
+category = "geometric_reconstruction"
+units = "mm"
+human_baseline_minutes = 480
+max_score = 6
+
+output_modality = "cad"
+accepted_output_formats = ["fcstd", "freecad-py", "fcmacro"]
+reference = ["solution/solution.FCStd"]
+notes = "ground truth is reference/solution.FCStd (hardcoded); FREECAD_CMD must point at freecadcmd 1.1 (the GT is authored in 1.1).\n\nAUDIT 2026-08-31: solution 6/6 PASS; ladder solution 6 > half_finished 5 = joint_limits_swapped 5 > mirrored 4 > one_link_missing 3 > decorative_dims 2.5 > dummy_joints 2 > double_scale 0.5 > build-fail 0/6 (gated, all subscores emitted). NEEDS-REVIEW checks (signature dimensions) score 0.5 in the envelope. Two proving adversaries the corpus regeneration had dropped were restored from Other Stuff/make_examples.py: double_scale proves the scale gate (every shape metric passes at 2x; only the ratio gate convicts) and decorative_dims proves the dims-drive probe (25 decoy constraints pass the count; volume-changed probes convict). Their FCStd binaries are uploaded to the assets container and pinned below (2026-08-31, az storage blob upload; round-trip checksum-verified).\n\nKnown attribution nuance: joint_limits_swapped is convicted by geometry at the delivered pose, not by the articulation probe (+/-5 degree drives cannot see swapped limits). A candidate with swapped limits but a correct delivered pose would pass -- joint-limit ranges are effectively ungraded, defensible since the brief asks only that joints stay mated and the mechanism articulates.\n\n\n2026-09-02 refactor merge: six adversaries resurfaced as STL-only pins (broken_mates, dead_geometry, no_joints, partial_weld, rigid, wrong_geometry). Their FCStd sources were recovered from git history (pre-blob commit 1e2a118) and re-pinned beside the STLs; each fails exactly its named defect (see labels). The pinned STLs predate these docs' current exports and tessellate differently; the FCStd is the graded artifact. The double_scale and decorative_dims FCStds were also re-uploaded under the folder-pin layout (the resync had dropped the old flat blobs; round-trip checksum-verified)."
+
+[metadata.harness]
+entrypoint = "harness/harness.py"
+timeout_s = 600.0
+requires_solidworks = false
+requires_freecad = true
+requires_llm = false
+
+[[metadata.inputs]]
+path = "environment/input.pdf"
+format = "pdf"
+role = "primary"
+
+[[metadata.assets]]
+path = "solution"
+url = "https://openaievalsetub0ktk.blob.core.windows.net/assets/FreeCAD/4_sling_lift/solution"
+sha256 = "3bca73b9150bdf21b8e306b42cc345fa554f09b3adac42477f52074bfb130435"
+bytes = 16906159
+files = 1
+manifest = [
+  ["solution.FCStd", "83c606e4e5642b89b84ed306b3f9cc54aa1377986d1c6292b4bbb464ae756399", 16906159],
+]
+
+[[metadata.assets]]
+path = "tests/task/reference/solution.FCStd"
+url = "https://openaievalsetub0ktk.blob.core.windows.net/assets/FreeCAD/4_sling_lift/tests/task/reference/solution.FCStd"
+sha256 = "83c606e4e5642b89b84ed306b3f9cc54aa1377986d1c6292b4bbb464ae756399"
+bytes = 16906159
+
+[[metadata.assets]]
+path = "examples/adversarial_assembly_mirrored_relative_to_ground_truth"
+url = "https://openaievalsetub0ktk.blob.core.windows.net/assets/FreeCAD/4_sling_lift/examples/adversarial_assembly_mirrored_relative_to_ground_truth"
+sha256 = "68ad703b548c881639df78546c3bd4b67c7b6aa70c67004d74c383d5d2b988a4"
+bytes = 18161334
+files = 1
+manifest = [
+  ["adversarial_assembly_mirrored_relative_to_ground_truth.FCStd", "aaef77be2b7fc6ef653b5ac2a7c46ae6c5b5e6b362c99ef165228c8c6dc4f7bb", 18161334],
+]
+
+[[metadata.assets]]
+path = "examples/adversarial_dummy_joints_inflate_the_count"
+url = "https://openaievalsetub0ktk.blob.core.windows.net/assets/FreeCAD/4_sling_lift/examples/adversarial_dummy_joints_inflate_the_count"
+sha256 = "f3678b1a34f2bad2cec6a905dc54d9c6bedb311840202029edd661277cf5e5d2"
+bytes = 18173681
+files = 1
+manifest = [
+  ["adversarial_dummy_joints_inflate_the_count.FCStd", "def326c0efb24b113da87f2b3ea768975d29285ac59bd2e6564577a694efc663", 18173681],
+]
+
+[[metadata.assets]]
+path = "examples/adversarial_half_finished_missing_features"
+url = "https://openaievalsetub0ktk.blob.core.windows.net/assets/FreeCAD/4_sling_lift/examples/adversarial_half_finished_missing_features"
+sha256 = "72b545b8048964018a1403bf373bb845d87eab6f9de23a7701a028bcd51d95bf"
+bytes = 16206839
+files = 1
+manifest = [
+  ["adversarial_half_finished_missing_features.FCStd", "93cfafd62a1041cbbb18eac5aba7d0414bf12fed1a4201205c49704f24c66d0d", 16206839],
+]
+
+[[metadata.assets]]
+path = "examples/adversarial_joint_limits_swapped"
+url = "https://openaievalsetub0ktk.blob.core.windows.net/assets/FreeCAD/4_sling_lift/examples/adversarial_joint_limits_swapped"
+sha256 = "24e610ffc882aed02efefeb9bde6d29c5195db91f38ef25d611e495055b6a4a7"
+bytes = 18139958
+files = 1
+manifest = [
+  ["adversarial_joint_limits_swapped.FCStd", "d2659b48a4f6e7cef34163e6dd42b9da1a204f227f75ec1ccb044ae2f0886153", 18139958],
+]
+
+[[metadata.assets]]
+path = "examples/adversarial_one_link_missing_joints_bridge_gap"
+url = "https://openaievalsetub0ktk.blob.core.windows.net/assets/FreeCAD/4_sling_lift/examples/adversarial_one_link_missing_joints_bridge_gap"
+sha256 = "192c8d3c5c7165645f3c3b6141e85a014d866b37eaa2ed1af8f72b4249f4196d"
+bytes = 17009113
+files = 1
+manifest = [
+  ["adversarial_one_link_missing_joints_bridge_gap.FCStd", "1af0401ec7e737d771697bae3e8e0676f884d3bbefa921d87c32da9c0f775a0f", 17009113],
+]
+
+[verifier]
+timeout_sec = 600.0
+
+[verifier.env]
+
+[agent]
+timeout_sec = 900.0
+
+[environment]
+network_mode = "public"
+build_timeout_sec = 900.0
+os = "linux"
+
+[environment.env]
+
+[solution.env]
+
+[[metadata.assets]]
+path = "tests/task/reference"
+url = "https://openaievalsetub0ktk.blob.core.windows.net/assets/FreeCAD/4_sling_lift/tests/task/reference"
+sha256 = "7496716869bfec0e2072e25827b6186e21ecabf66af386fc720cb0aa8b0c1866"
+bytes = 299985078
+files = 13
+manifest = [
+  ["adversarial_assembly_mirrored_relative_to_ground_truth.png", "0d749fd4b59c74523a95d048df02cbef8e727ce89a900ac42845514aef1395fa", 75643],
+  ["adversarial_assembly_mirrored_relative_to_ground_truth.stl", "2c377d4fe9d1830e7b78341c72611edd913d4f94698ad374ef0c020cfb0b57e7", 60617084],
+  ["adversarial_dummy_joints_inflate_the_count.png", "384e1ece93f4606dd55774ce017e2fb70f056db57068e8c2bce447214e7fc029", 76468],
+  ["adversarial_dummy_joints_inflate_the_count.stl", "b5e7b672a0562b48cff34ad9beef051e6e793ad05a3f92742cb91e63fcb6cd0c", 60566884],
+  ["adversarial_half_finished_missing_features.png", "994ff9eeb00b8981353f3995e21c349d7bdf557573ebaff5f68288c4360e4c25", 83182],
+  ["adversarial_half_finished_missing_features.stl", "51ccef849639bd97076a76e9c168b7322152cbb3ce203ce042915099f8af671d", 34000084],
+  ["adversarial_joint_limits_swapped.png", "5b4ec00b582c3aac5448f14c9782b83e40d6eb9d8242b64006d3df745ed637cf", 73224],
+  ["adversarial_joint_limits_swapped.stl", "8b6786b5aca82e569f18abfe84379b8a0eaf3019cbc6bce5a096dffeda40b37b", 60566684],
+  ["adversarial_one_link_missing_joints_bridge_gap.png", "ca99094ea001c17f81ca41f3ed0287659587d7b29b2395dd7cc08b0b3abdba89", 83754],
+  ["adversarial_one_link_missing_joints_bridge_gap.stl", "edd41424eb93c7856e5edaf5e4f8bfd0e120fd015511721cef748307eb8be120", 30002284],
+  ["solution.FCStd", "83c606e4e5642b89b84ed306b3f9cc54aa1377986d1c6292b4bbb464ae756399", 16906159],
+  ["solution.png", "967b554cc5befee554c7cc8889c2657796094cae87ab26f412bce4ddf409263f", 77344],
+  ["solution.stl", "f373201390ef203ee14c540e2afc42ae492ed32f6c047edc4e04d0d24c3b7f4b", 36856284],
+]
